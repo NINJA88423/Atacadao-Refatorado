@@ -1,0 +1,10 @@
+# Configuração local (nunca versionar)
+config.properties
+
+# Maven / NetBeans
+target/
+nbproject/private/
+
+# Java
+*.class
+*.log
