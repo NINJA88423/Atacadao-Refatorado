@@ -6,6 +6,8 @@ package repository;
 
 import model.Produto;
 
+import connection.AtacadaoConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import MyPackages.JOPCreator;
-
 
 
 
@@ -23,7 +23,9 @@ import MyPackages.JOPCreator;
 public class ProdutoDAO {
     
     
-    private Connection con = new connections.AtacadaoConnection().connect();;
+    
+    
+    private Connection con = new AtacadaoConnection().connect();;
     private PreparedStatement st;
     private ResultSet rs;
     
@@ -31,6 +33,29 @@ public class ProdutoDAO {
     private String sqlRead = "SELECT * FROM produto";
     private String sqlUpdate = "UPDATE produto SET nome = ?, marca = ?, preco = ?, isKG = ? WHERE id = ?";
     private String sqlDelete = "DELETE FROM produto WHERE codigo = ?";
+    
+    
+    
+    
+    private Produto buscarProduto() {
+        try {
+            Produto produto = new Produto(
+                rs.getInt("id"),
+                rs.getString("codigo"),
+                rs.getString("nome"),
+                rs.getString("marca"),
+                rs.getBoolean("isKG"),
+                rs.getBigDecimal("preco")
+            );
+            return produto;
+        } catch (SQLException e) {
+            System.out.println("Não foi possível buscar o produto! : " + e);
+            System.out.println(e);
+            return null;
+        }
+    }
+     
+    
     
     
     public boolean create(Produto produto) {
@@ -43,24 +68,25 @@ public class ProdutoDAO {
                 st.setString(1, produto.getCodigo());
                 st.setString(2, produto.getNome());
                 st.setString(3, produto.getMarca());
-                st.setFloat(4, produto.getPreco());
+                st.setBigDecimal(4, produto.getPreco());
                 st.setBoolean(5, produto.getIsKG());
                 st.executeUpdate();
                 rs.close();
                 st.close();
-                new JOPCreator().create("Message.Info", "Produto cadastrado com sucesso. O código gerado é: \'" + produto.getCodigo() + "\'");
                 return true;
             } else {
-                new JOPCreator().create("Message.Warn", "Já existe um produto com o mesmo código");
+                System.out.println("Já existe um produto com o mesmo código");
                 rs.close();
                 st.close();
                 return false;
             }
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
             return false;
         }
     }
+    
+    
     
     
     public List<Produto> read() {
@@ -69,75 +95,57 @@ public class ProdutoDAO {
             st = con.prepareStatement(sqlRead);
             rs = st.executeQuery();
             while (rs.next()) {
-                Produto produto = new Produto(
-                    rs.getInt("id"),
-                    rs.getString("codigo"),
-                    rs.getString("nome"),
-                    rs.getString("marca"),
-                    rs.getBoolean("isKG"),
-                    rs.getFloat("preco")
-                );
+                Produto produto = buscarProduto();
                 PRODUTOS.add(produto);
             }
             rs.close();
             st.close();
             return PRODUTOS;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
-            System.out.println(e);
+            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
             return null;
         }
     }
-    public Produto read(String codigo) {
+    
+    
+    public Produto readByCodigo(String codigo) {
         try {
             Produto p = null;
             st = con.prepareStatement(sqlRead + " WHERE codigo = ?");
             st.setString(1, codigo);
             rs = st.executeQuery();
             if (rs.next()) {
-                p = new Produto(
-                    rs.getInt("id"),
-                    rs.getString("codigo"),
-                    rs.getString("nome"),
-                    rs.getString("marca"),
-                    rs.getBoolean("isKG"),
-                    rs.getFloat("preco")
-                );
+                p = buscarProduto();
             }
             rs.close();
             st.close();
             return p;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
-            System.out.println(e);
+            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
             return null;
         }
     }
-    public Produto read(int id) {
+    
+    
+    public Produto readById(int id) {
         try {
             Produto p = null;
             st = con.prepareStatement(sqlRead + " WHERE id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                p = new Produto(
-                    rs.getInt("id"),
-                    rs.getString("codigo"),
-                    rs.getString("nome"),
-                    rs.getString("marca"),
-                    rs.getBoolean("isKG"),
-                    rs.getFloat("preco")
-                );
+                p = buscarProduto();
             }
             rs.close();
             st.close();
             return p;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
-            System.out.println(e);
+            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
             return null;
         }
     }
+    
+    
     
     
     public boolean update(Produto p) {
@@ -145,16 +153,18 @@ public class ProdutoDAO {
             st = con.prepareStatement(sqlUpdate);
             st.setString(1, p.getNome());
             st.setString(2, p.getMarca());
-            st.setFloat(3, p.getPreco());
+            st.setBigDecimal(3, p.getPreco());
             st.setBoolean(4, p.getIsKG());
             st.setInt(5, p.getId());
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
             return false;
         }
     }
+    
+    
     
     
     public void delete(String codigo) {
@@ -164,9 +174,11 @@ public class ProdutoDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
         }
     }
+    
+    
     
     
 }

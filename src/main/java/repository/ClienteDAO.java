@@ -6,6 +6,8 @@ package repository;
 
 import model.Cliente;
 
+import connection.AtacadaoConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import MyPackages.JOPCreator;
-
 
 
 
@@ -23,7 +23,9 @@ import MyPackages.JOPCreator;
 public class ClienteDAO {
     
     
-    private Connection con = new connections.AtacadaoConnection().connect();;
+    
+    
+    private Connection con = new AtacadaoConnection().connect();
     private PreparedStatement st;
     private ResultSet rs;
     
@@ -31,6 +33,26 @@ public class ClienteDAO {
     private String sqlRead = "SELECT * FROM cliente";
     private String sqlUpdate = "UPDATE cliente SET telefone = ? WHERE id = ?";
     private String sqlDelete = "DELETE FROM cliente WHERE cpf = ?";
+    
+    
+    
+    
+    private Cliente buscarCliente() {
+        try {
+            Cliente cliente = new Cliente(
+                rs.getInt("id"),
+                rs.getString("nome"),
+                rs.getString("cpf"),
+                rs.getString("telefone"));
+            return cliente;
+        } catch (SQLException e) {
+            System.out.println("Não foi possível buscar o cliente! : " + e);
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    
     
     
     public boolean create(Cliente cliente) {
@@ -48,16 +70,18 @@ public class ClienteDAO {
                 st.close();
                 return true;
             } else {
-                new JOPCreator().create("Message.Warn", "Já existe um cliente com o mesmo CPF");
+                System.out.print("Já existe um cliente com o mesmo CPF");
                 rs.close();
                 st.close();
                 return false;
             }
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return false;
         }
     }
+    
+    
     
     
     public List<Cliente> read() {
@@ -66,66 +90,58 @@ public class ClienteDAO {
             st = con.prepareStatement(sqlRead);
             rs = st.executeQuery();
             while (rs.next()) {
-                Cliente cliente = new Cliente(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("cpf"),
-                    rs.getString("telefone"));
+                Cliente cliente = buscarCliente();
                 CLIENTES.add(cliente);
             }
             rs.close();
             st.close();
             return CLIENTES;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             System.out.println(e);
             return null;
         }
     }
-    public Cliente read(int id) {
+    
+    
+    public Cliente readById(int id) {
         try {
             Cliente cliente = null;
             st = con.prepareStatement(sqlRead + " WHERE id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                cliente = new Cliente(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("cpf"),
-                    rs.getString("telefone"));
+                cliente = buscarCliente();
             }
             rs.close();
             st.close();
             return cliente;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
-            System.out.println(e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return null;
         }
     }
-    public Cliente read(String cpf) {
+    
+    
+    public Cliente readByCpf(String cpf) {
         try {
             Cliente cliente = null;
             st = con.prepareStatement(sqlRead + " WHERE cpf = ?");
             st.setString(1, cpf);
             rs = st.executeQuery();
             if (rs.next()) {
-                cliente = new Cliente(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("cpf"),
-                    rs.getString("telefone"));
+                cliente = buscarCliente();
             }
             rs.close();
             st.close();
             return cliente;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
-            System.out.println(e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return null;
         }
     }
+    
+    
     
     
     public boolean update(Cliente c) {
@@ -136,10 +152,12 @@ public class ClienteDAO {
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return false;
         }
     }
+    
+    
     
     
     public void delete(String cpf) {
@@ -149,9 +167,11 @@ public class ClienteDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            new JOPCreator().create("Message.Error", "Não foi possível se conectar com o banco de dados!");
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
         }
     }
+    
+    
     
     
 }
