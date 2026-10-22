@@ -29,7 +29,7 @@ public class VendaDAO {
     
     
     
-    private Connection con = new AtacadaoConnection().connect();;
+    private Connection con = new AtacadaoConnection().connect();
     private PreparedStatement st;
     private ResultSet rs;
     
@@ -50,10 +50,10 @@ public class VendaDAO {
     private Venda buscarVenda() {
         try {
             Venda venda = new Venda(
-                    rs.getInt("id"),
-                    rs.getInt("id_cliente"),
-                    rs.getTimestamp("datahora").toLocalDateTime(),
-                    rs.getBigDecimal("total")
+                rs.getInt("id"),
+                rs.getInt("id_cliente"),
+                rs.getTimestamp("datahora").toLocalDateTime(),
+                rs.getBigDecimal("total")
             );
             return venda;
         } catch (SQLException e) {
@@ -96,8 +96,12 @@ public class VendaDAO {
             rs = st.executeQuery();
             if (rs.next()) {
                 venda.setId(rs.getInt("id"));
+                st.close();
+                rs.close();
                 return venda;
             } else {
+                st.close();
+                rs.close();
                 return null;
             }
         } catch (SQLException e) {
