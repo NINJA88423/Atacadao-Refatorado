@@ -1,4 +1,4 @@
-package service;
+package service.regras;
 
 
 public class RegraNegocioException extends RuntimeException {

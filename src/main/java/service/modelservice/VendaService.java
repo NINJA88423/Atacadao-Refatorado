@@ -12,8 +12,8 @@ import model.Venda;
 import repository.ClienteDAO;
 import repository.ProdutoVendaDAO;
 import repository.VendaDAO;
-import service.CalculadoraVenda;
-import service.RegraNegocioException;
+import service.regras.CalculadoraVenda;
+import service.regras.RegraNegocioException;
 
 
 

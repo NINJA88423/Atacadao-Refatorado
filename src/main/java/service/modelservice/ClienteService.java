@@ -5,8 +5,8 @@ package service.modelservice;
 import java.util.List;
 import model.Cliente;
 import repository.ClienteDAO;
-import service.RegraNegocioException;
-import service.ValidadorCadastro;
+import service.regras.RegraNegocioException;
+import service.regras.ValidadorCadastro;
 
 
 

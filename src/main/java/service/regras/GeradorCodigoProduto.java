@@ -1,4 +1,4 @@
-package service;
+package service.regras;
 
 
 import java.util.Random;

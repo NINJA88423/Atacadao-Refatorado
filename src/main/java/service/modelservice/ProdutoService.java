@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import model.Produto;
 import repository.ProdutoDAO;
-import service.GeradorCodigoProduto;
-import service.RegraNegocioException;
-import service.ValidadorCadastro;
+import service.regras.GeradorCodigoProduto;
+import service.regras.RegraNegocioException;
+import service.regras.ValidadorCadastro;
 
 
 
