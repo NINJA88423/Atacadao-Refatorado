@@ -5,6 +5,7 @@ package repository;
 
 
 import model.Venda;
+import model.Intervalo;
 
 import connection.AtacadaoConnection;
 
@@ -64,6 +65,24 @@ public class VendaDAO {
     
     
     
+    private String definirIntervalo(Intervalo t) {
+        switch (t) {
+            case HOJE:
+                return sqlReadTime[0];
+            case SEMANA_ATUAL:
+                return sqlReadTime[1];
+            case MES_ATUAL:
+                return sqlReadTime[2];
+            case ANO_ATUAL:
+                return sqlReadTime[3];
+            default:
+                throw new IllegalArgumentException("Intervalo Inlegal");
+        }
+    }
+    
+    
+    
+    
     public Venda create(Venda venda) {
         try {
             Timestamp tsp = (venda.getDatahora() != null) ? Timestamp.valueOf(venda.getDatahora()) : new Timestamp(System.currentTimeMillis());
@@ -109,10 +128,10 @@ public class VendaDAO {
     }
     
     
-    public List<Venda> readByCalendarId(int v) {
+    public List<Venda> readByCalendarId(Intervalo t) {
         try {
             List<Venda> VENDAS = new ArrayList<Venda>();
-            st = con.prepareStatement(sqlReadTime[v]);
+            st = con.prepareStatement(definirIntervalo(t));
             rs = st.executeQuery();
             while (rs.next()) {
                 Venda venda = buscarVenda();
