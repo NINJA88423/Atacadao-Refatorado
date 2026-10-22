@@ -50,8 +50,7 @@ public class UsuarioDAO {
             );
             return usuario;
         } catch (SQLException e) {
-            System.out.println("Não foi possível buscar o usuário! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível buscar o usúario!", e);
         }
     }
     
@@ -83,8 +82,7 @@ public class UsuarioDAO {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -104,8 +102,7 @@ public class UsuarioDAO {
             st.close();
             return USUARIOS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -127,8 +124,7 @@ public class UsuarioDAO {
                 return null;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -149,8 +145,7 @@ public class UsuarioDAO {
                 return null;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -169,8 +164,7 @@ public class UsuarioDAO {
             st.close();
             return true;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -184,7 +178,7 @@ public class UsuarioDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     

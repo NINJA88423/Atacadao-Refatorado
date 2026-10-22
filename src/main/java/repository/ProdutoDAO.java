@@ -49,9 +49,7 @@ public class ProdutoDAO {
             );
             return produto;
         } catch (SQLException e) {
-            System.out.println("Não foi possível buscar o produto! : " + e);
-            System.out.println(e);
-            return null;
+            throw new IllegalStateException("Não foi possível buscar o produto!", e);
         }
     }
      
@@ -81,8 +79,7 @@ public class ProdutoDAO {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -102,8 +99,7 @@ public class ProdutoDAO {
             st.close();
             return PRODUTOS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -121,8 +117,7 @@ public class ProdutoDAO {
             st.close();
             return p;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -140,8 +135,7 @@ public class ProdutoDAO {
             st.close();
             return p;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -159,8 +153,7 @@ public class ProdutoDAO {
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -174,7 +167,7 @@ public class ProdutoDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     

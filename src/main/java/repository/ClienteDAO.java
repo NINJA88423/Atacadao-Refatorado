@@ -46,9 +46,7 @@ public class ClienteDAO {
                 rs.getString("telefone"));
             return cliente;
         } catch (SQLException e) {
-            System.out.println("Não foi possível buscar o cliente! : " + e);
-            System.out.println(e);
-            return null;
+            throw new IllegalStateException("Não foi possível buscar o cliente!", e);
         }
     }
     
@@ -76,8 +74,7 @@ public class ClienteDAO {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -97,9 +94,7 @@ public class ClienteDAO {
             st.close();
             return CLIENTES;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            System.out.println(e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -117,8 +112,7 @@ public class ClienteDAO {
             st.close();
             return cliente;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -136,8 +130,7 @@ public class ClienteDAO {
             st.close();
             return cliente;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -152,8 +145,7 @@ public class ClienteDAO {
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -167,7 +159,7 @@ public class ClienteDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     

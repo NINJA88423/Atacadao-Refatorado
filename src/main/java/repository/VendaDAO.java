@@ -57,8 +57,7 @@ public class VendaDAO {
             );
             return venda;
         } catch (SQLException e) {
-            System.out.println("Não foi possível buscar a venda! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível buscar a venda!", e);
         }
     }
     
@@ -105,8 +104,7 @@ public class VendaDAO {
                 return null;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -126,8 +124,7 @@ public class VendaDAO {
             st.close();
             return VENDAS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -145,8 +142,7 @@ public class VendaDAO {
             st.close();
             return VENDAS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -164,8 +160,7 @@ public class VendaDAO {
             st.close();
             return true;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -179,7 +174,7 @@ public class VendaDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     

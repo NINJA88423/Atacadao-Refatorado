@@ -52,8 +52,7 @@ public class ProdutoVendaDAO {
             );
             return pvenda;
         } catch (SQLException e) {
-            System.out.println("Não foi possível buscar o produto da venda! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível buscar o produto da venda!", e);
         }
     }
     
@@ -72,7 +71,7 @@ public class ProdutoVendaDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -92,8 +91,7 @@ public class ProdutoVendaDAO {
             st.close();
             return PRODUTOVENDAS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -111,8 +109,7 @@ public class ProdutoVendaDAO {
             st.close();
             return PRODUTOVENDAS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return null;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -130,8 +127,7 @@ public class ProdutoVendaDAO {
             st.close();
             return true;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
-            return false;
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
@@ -145,7 +141,7 @@ public class ProdutoVendaDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
+            throw new IllegalStateException("Não foi possível se conectar com o banco de dados!", e);
         }
     }
     
