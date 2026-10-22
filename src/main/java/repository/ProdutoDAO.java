@@ -81,7 +81,7 @@ public class ProdutoDAO {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return false;
         }
     }
@@ -102,7 +102,7 @@ public class ProdutoDAO {
             st.close();
             return PRODUTOS;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return null;
         }
     }
@@ -121,7 +121,7 @@ public class ProdutoDAO {
             st.close();
             return p;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return null;
         }
     }
@@ -140,7 +140,7 @@ public class ProdutoDAO {
             st.close();
             return p;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return null;
         }
     }
@@ -159,7 +159,7 @@ public class ProdutoDAO {
             st.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
             return false;
         }
     }
@@ -174,7 +174,7 @@ public class ProdutoDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Não foi possível se conectar com o banco de dados!" + e);
+            System.out.println("Não foi possível se conectar com o banco de dados! : " + e);
         }
     }
     

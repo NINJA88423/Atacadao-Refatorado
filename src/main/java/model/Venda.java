@@ -5,6 +5,8 @@ package model;
 
 import java.time.LocalDateTime;
 
+import java.math.BigDecimal;
+
 
 
 
@@ -14,7 +16,7 @@ public class Venda {
     private int id;
     private int id_cliente;
     private LocalDateTime datahora;
-    private float total;
+    private BigDecimal total;
 
     
     public Venda(){}
@@ -23,7 +25,7 @@ public class Venda {
         int id,
         int id_cliente,
         LocalDateTime datahora,
-        float total
+        BigDecimal total
     ){
         this.id = id;
         this.id_cliente = id_cliente;
@@ -35,13 +37,13 @@ public class Venda {
     public void setId(int id){this.id = id;}
     public void setIdCliente(int id_cliente){this.id_cliente = id_cliente;}
     public void setDatahora(LocalDateTime datahora){this.datahora = datahora;}
-    public void setTotal(float total){this.total = total;}
+    public void setTotal(BigDecimal total){this.total = total;}
 
     
     public int getId(){return id;}
     public int getIdCliente(){return id_cliente;}
     public LocalDateTime getDatahora(){return datahora;}
-    public float getTotal(){return total;}
+    public BigDecimal getTotal(){return total;}
 
     
 }
