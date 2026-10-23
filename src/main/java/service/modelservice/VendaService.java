@@ -26,8 +26,7 @@ public class VendaService {
     private final CalculadoraVenda calculadora;
 
     
-    public VendaService(VendaDAO vendaRepositorio, ProdutoVendaDAO itemRepositorio,
-                        ClienteDAO clienteRepositorio, CalculadoraVenda calculadora) {
+    public VendaService(VendaDAO vendaRepositorio, ProdutoVendaDAO itemRepositorio, ClienteDAO clienteRepositorio, CalculadoraVenda calculadora) {
         this.vendaRepositorio = vendaRepositorio;
         this.itemRepositorio = itemRepositorio;
         this.clienteRepositorio = clienteRepositorio;

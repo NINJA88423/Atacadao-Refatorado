@@ -99,11 +99,12 @@ public class ProdutoVendaDAO {
     public List<ProdutoVenda> readByIdVenda(int id_venda) {
         try {
             List<ProdutoVenda> PRODUTOVENDAS = new ArrayList<ProdutoVenda>();
-            st = con.prepareStatement(sqlRead + " WHERE id = ?");
+            st = con.prepareStatement(sqlRead + " WHERE id_venda = ?");
             st.setInt(1, id_venda);
             rs = st.executeQuery();
             while (rs.next()) {
                 ProdutoVenda venda = buscarProdutoVenda();
+                PRODUTOVENDAS.add(venda);
             }
             rs.close();
             st.close();
